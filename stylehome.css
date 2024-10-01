@@ -1,0 +1,113 @@
+body {
+    background-color: #021A26;
+    height: 100vh;
+    margin: 0;
+}
+
+.menu-lateral {
+    background-color: #ffffff;
+    padding-top: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100px;
+    /* Haz el menú más angosto */
+}
+
+.menu-lateral a {
+    color: #000;
+    font-weight: bold;
+    padding: 15px;
+    display: block;
+    text-align: left;
+    text-decoration: none;
+}
+
+.menu-lateral img {
+    height: auto;
+    margin-bottom: 20px;
+}
+
+/* Icono y enlace de "Salir" */
+.menu-lateral .salir {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.menu-lateral .salir i {
+    font-size: 24px;
+    display: block;
+    margin-top: 10px;
+}
+
+/* Estilo del contenido principal */
+.contenido-principal {
+    padding: 20px;
+}
+
+.amarillo {
+    background-image: url('images/amarillo.png');
+    background-size: cover;
+    background-position: center;
+    width: 630px;
+    height: 289px;
+    padding: 20px;
+    color: white;
+    /* Ajusta el color del texto para que contraste con la imagen */
+}
+
+
+.cuadro {
+    width: 250px;
+    height: 200px;
+    background-color: #022536;
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.editar-icono {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #E5E5E5;
+}
+
+.tituloproyecto {
+    font-size: 20px;
+    font-weight: bold;
+    color: #E5E5E5;
+    margin: 15px 0;
+}
+
+.tituloprogreso {
+    font-size: 16px;
+    color: #E5E5E5;
+    margin: 5px 0;
+    /* Espaciado entre el título y la barra de progreso */
+}
+
+.barra-progreso {
+    margin-top: 10px;
+    /* Espaciado en la barra de progreso */
+    flex-grow: 1;
+}
+
+.progress {
+    height: 20px;
+}
+
+.texto-pequeno {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 12px;
+    color: #E5E5E5;
+}
