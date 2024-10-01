@@ -103,33 +103,33 @@ form.sign-up-form {
 
 .input-field {
     width: 100%;
-    margin: 20px 0; /* Espacio entre los campos */
+    margin: 20px 0; 
     position: relative; 
 }
 
 .input-label {
-    position: absolute; /* Para posicionar el label fuera */
-    left: 10px; /* Ajusta el espacio desde la izquierda */
-    top: -15px; /* Ajusta el espacio desde la parte superior */
-    font-size: 14px; /* Tamaño de fuente para la etiqueta */
-    color: #666; /* Color de la etiqueta */
-    padding-bottom: 10px;
+    position: absolute; 
+    left: 10px; 
+    top: -15px; 
+    font-size: 14px; 
+    color: #666; 
+    
 }
 
 .input-field i {
-    position: absolute; /* Coloca el ícono en la posición deseada */
-    left: 10px; /* Ajusta el espacio desde la izquierda */
-    top: 50%; /* Centra el ícono verticalmente */
-    transform: translateY(-50%); /* Ajuste de verticalidad */
+    position: absolute; 
+    left: 10px; 
+    top: 50%; 
+    transform: translateY(-50%); 
     color: #8897AD;
     font-size: 14px;
 }
 
 .input-field input {
     width: 100%;
-    height: 50px; /* Altura del input */
+    height: 50px; 
     background: #f0f0f0;
-    padding-left: 40px; /* Espacio para el ícono */
+    padding-left: 40px; 
     border: 2px solid #D4D7E3;
     border-radius: 10px;
     outline: none;
