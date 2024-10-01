@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="stylesheet" href="stylelogin.css">
+    <title>Helio Grid</title>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="signin-signup">
+            <form action="" class="sign-in-form">
+                <img src="images/logologin.png" alt="logo" class="logologin">
+                <p class="intrologin">¡Hola! 🌟 Hoy es un nuevo día, ¡y es tu momento! Tienes el poder de dar vida a tus
+                    proyectos. Inicia sesión y empieza a organizar tus ideas y metas con facilidad. ¡Hagámoslo realidad
+                    juntos!</p>
+                <div class="input-field">
+                    <label for="username" class="input-label">Username</label>
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" placeholder="Username">
+                </div>
+                <div class="input-field">
+                    <label for="password" class="input-label">Password</label>
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Password">
+                </div>
+                <input type="submit" value="Iniciar sesión" class="btn">
+                <p class="account-text">Nuevo en nuestros proyectos?<a href="#" id="sign-up-btn2">Registrate</a></p>
+            </form>
+
+            <form action="" class="sign-up-form">
+                <img src="images/logologin.png" alt="logo" class="logoregistrarse">
+                <p class="introregistro">¡Bienvenido! 🎉 Hoy es el día perfecto para dar el primer paso hacia tus
+                    sueños. Regístrate y empieza a dar forma a tus ideas y proyectos de manera sencilla. ¡Estamos
+                    emocionados de acompañarte en este viaje hacia el éxito!</p>
+                <h2 class="title">Registrate</h2>
+                <div class="input-field">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Username">
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-envelope"></i>
+                    <input type="text" placeholder="Email">
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Password">
+                </div>
+                <input type="submit" value="Registrarse" class="btn">
+                <p class="account-text">Already have an account? <a href="#" id="sign-in-btn2">Sign in</a></p>
+            </form>
+        </div>
+
+        <div class="panels-container">
+            <div class="panel left-panel">
+                <div class="content">
+                    <h3 class="h3difuminado">Ya hemos trabajado juntos?</h3>
+                    <button class="btn" id="sign-in-btn">Iniciar sesión</button>
+                </div>
+                <img src="signin.svg" alt="" class="image">
+            </div>
+            <div class="panel right-panel">
+                <div class="content">
+                    <h3 class="h3difuminado">Nuevo en nuestros proyectos?</h3>
+                    <button class="btn" id="sign-up-btn">Registrate</button>
+                </div>
+                <img src="signup.svg" alt="" class="image">
+            </div>
+        </div>
+    </div>
+    <script src="jslogin.js"></script>
+</body>
+
+</html>
