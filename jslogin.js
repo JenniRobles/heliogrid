@@ -21,3 +21,7 @@ sign_up_btn2.addEventListener("click", () => {
 sign_in_btn2.addEventListener("click", () => {
     container.classList.remove("sign-up-mode2");
 });
+
+
+
+

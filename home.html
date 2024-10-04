@@ -31,29 +31,271 @@
                 </div>
             </nav>
 
-            <!-- Contenido principal -->
+            <!-- Cuadro amarillo -->
             <div class="col-md-9 col-lg-10 contenido-principal">
-                <div class="amarillo">
-                    <p>lorem</p>
-                    <h3>lorem</h3>
-                    <p>lorem</p>
-                    <button>lorem</button>
+                <div class="row">
+                    <!-- Cuadro amarillo -->
+                    <div class="col-md-6">
+                        <div class="amarillo p-4">
+                            <p>lorem</p>
+                            <h3>lorem</h3>
+                            <p>lorem</p>
+                            <button class="btn">lorem</button>
+                        </div>
+                    </div>
+
+                    <!-- Bloc de notas -->
+                    <div class=" notascontainer container mt-5">
+                        <div class="bloc-notas p-4">
+                            <h4>Escribe tus notas aquí:</h4>
+                            <textarea class="form-control" rows="1" placeholder="Escribe tus notas..."
+                                id="notaTextarea"></textarea>
+                            <button class="btnota btn-secondary mt-3" id="nuevaNota">Añadir Nota Nueva</button>
+                        </div>
+                        <div id="listaNotas"></div> <!-- Contenedor para las notas añadidas -->
+                    </div>
                 </div>
 
-                <div class="cuadro d-flex flex-column">
-                    <i class="bi bi-three-dots-vertical editar-icono"></i>
+
+                <style>
+                    .btnota {
+                        width: 100%;
+                        height: 43px;
+                        border: none;
+                        border-radius: 10px;
+                        background: #021A26;
+                        color: #fff;
+                        font-weight: 600;
+                        margin: 10px 0;
+                        text-transform: uppercase;
+                        cursor: pointer;
+                    }
+
+                    .notascontainer {
+                        width: 507px;
+                    }
+
+                    .bloc-notas {
+                        color: #fff;
+                        background-color: #022536;
+                        /* Color de fondo para el bloc de notas */
+                        border: 1px solid #ddd;
+                        /* Borde del bloc de notas */
+                        border-radius: 8px;
+                        /* Esquinas redondeadas */
+                        width: 507px;
+                        /* Ancho del contenedor padre */
+                        display: flex;
+                        /* Usar flexbox */
+                        flex-direction: column;
+                        /* Disposición vertical */
+                        margin-bottom: 15px;
+                        /* Espacio entre las notas */
+                    }
+
+                    .nota {
+                        margin-top: 15px;
+                        /* Espacio entre notas */
+                        padding: 10px;
+                        /* Espaciado interno */
+                        border: 1px solid #ddd;
+                        /* Borde de las notas */
+                        border-radius: 5px;
+                        /* Esquinas redondeadas */
+                        background-color: #ffffff;
+                        /* Fondo blanco para las notas */
+                        width: 507px;
+                        /* Ancho máximo para cada nota */
+                    }
+
+                    textarea {
+                        min-height: 50px;
+                        /* Altura mínima del textarea */
+                        max-height: 300px;
+                        /* Altura máxima del textarea */
+                        resize: vertical;
+                        /* Permitir solo el cambio de tamaño vertical */
+                        flex-grow: 1;
+                        /* Permitir que el textarea crezca */
+                    }
+                </style>
+
+                <script>
+                    // Ajustar automáticamente el tamaño del textarea
+                    const textarea = document.getElementById('notaTextarea');
+
+                    textarea.addEventListener('input', function () {
+                        this.style.height = 'auto'; // Restablecer la altura para calcular la nueva
+                        this.style.height = (this.scrollHeight) + 'px'; // Ajustar la altura al contenido
+                    });
+
+                    // Agregar funcionalidad para añadir una nueva nota
+                    document.getElementById('nuevaNota').addEventListener('click', function () {
+                        const notaTexto = textarea.value.trim(); // Obtener el texto de la nota y eliminar espacios innecesarios
+                        if (notaTexto) {
+                            const nuevaNota = document.createElement('div'); // Crear un nuevo div para la nota
+                            nuevaNota.classList.add('nota'); // Añadir clase para estilos
+                            nuevaNota.textContent = notaTexto; // Asignar el texto de la nota
+                            document.getElementById('listaNotas').appendChild(nuevaNota); // Añadir la nota al contenedor de notas
+                            textarea.value = ''; // Limpiar el textarea
+                            textarea.dispatchEvent(new Event('input')); // Ajustar altura
+                        } else {
+                            alert('Por favor, escribe algo antes de añadir la nota.');
+                        }
+                    });
+                </script>
+
+                <!-- Cuadro de proyecto -->
+                <!-- HTML -->
+                <div class="proyectoscontainer container mt-2">
+                    <button class="btn ms-0" id="agregarCuadro">Añadir Proyecto</button>
+                    <div id="contenedorCajitas" class="row mt-3">
+                        <!-- Las cajitas se agregarán dinámicamente aquí -->
+                    </div>
+                </div>
+
+                <!-- Modal para editar -->
+                <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editarModalLabel">Editar Información</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="formEditar">
+                                    <div class="mb-3">
+                                        <label for="inputTituloProyecto" class="form-label">Título del Proyecto</label>
+                                        <input type="text" class="form-control" id="inputTituloProyecto" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="inputTextoPequeno" class="form-label">Fecha de entrega</label>
+                                        <input type="text" class="form-control" id="inputTextoPequeno" required>
+                                    </div>
+                                    <button type="button" class="btn btn-primary"
+                                        id="guardarCambiosBtn">Guardar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Modal de opción para editar o ver más -->
+                <div class="modal fade" id="opcionModal" tabindex="-1" aria-labelledby="opcionModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="opcionModalLabel">Seleccionar Opción</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                ¿Quieres editar el proyecto o ver más detalles?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                    onclick="verMasDetalles()">Ver más</button>
+                                <button type="button" class="btn btn-primary" id="editarOpcion">Editar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- JavaScript personalizado -->
+                <script>
+                    let cuadroActual; // Variable global para almacenar el cuadro actual
+
+                    document.addEventListener('DOMContentLoaded', function () {
+                        document.getElementById('agregarCuadro').addEventListener('click', function () {
+                            const contenedorCajitas = document.getElementById('contenedorCajitas');
+
+                            // Crear una nueva cajita dentro de una columna de Bootstrap
+                            const nuevaColumna = document.createElement('div');
+                            nuevaColumna.classList.add('col-6', 'mb-4'); // Para limitar a dos cajitas por fila
+
+                            nuevaColumna.innerHTML = `
+                <div class="cuadro d-flex flex-column p-3 border rounded">
+                    <i class="bi bi-three-dots-vertical editar-icono" data-bs-toggle="modal" data-bs-target="#opcionModal"></i>
                     <h5 class="tituloproyecto">Título del Proyecto</h5>
                     <h6 class="tituloprogreso">Progreso</h6>
                     <div class="barra-progreso">
                         <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50"
-                                aria-valuemin="0" aria-valuemax="100">
-                                50%
-                            </div>
+                            <div class="progress-bar custom-yellow" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
                         </div>
                     </div>
                     <small class="texto-pequeno">Fecha de entrega</small>
+                    <button class="btn btn-sm mt-2 eliminarCuadro">Eliminar</button>
                 </div>
+            `;
+
+                            contenedorCajitas.appendChild(nuevaColumna);
+
+                            // Agregar funcionalidad para eliminar la cajita
+                            nuevaColumna.querySelector('.eliminarCuadro').addEventListener('click', function () {
+                                nuevaColumna.remove();
+                            });
+                        });
+
+                        // Para identificar qué cuadro se está editando
+                        document.addEventListener('click', function (event) {
+                            if (event.target.classList.contains('editar-icono')) {
+                                cuadroActual = event.target.closest('.cuadro'); // Guardar el cuadro actual
+                                document.getElementById('inputTituloProyecto').value = cuadroActual.querySelector('.tituloproyecto').textContent;
+                                document.getElementById('inputTextoPequeno').value = cuadroActual.querySelector('.texto-pequeno').textContent;
+                                // Abrir el modal de opciones
+                                var myModal = new bootstrap.Modal(document.getElementById('opcionModal'));
+                                myModal.show();
+                            }
+                        });
+
+                        // Manejar la acción del botón "Editar"
+                        document.getElementById('editarOpcion').addEventListener('click', function () {
+                            // Cerrar el modal de opciones
+                            var myModalOpcion = bootstrap.Modal.getInstance(document.getElementById('opcionModal'));
+                            myModalOpcion.hide();
+
+                            // Abrir el modal de edición
+                            var myModalEditar = new bootstrap.Modal(document.getElementById('editarModal'));
+                            myModalEditar.show();
+                        });
+
+                        // Manejar la acción del botón "Guardar" en el modal de edición
+                        document.getElementById('guardarCambiosBtn').addEventListener('click', function () {
+                            guardarCambios(); // Guardar cambios
+                            // Cerrar el modal de edición
+                            var myModalEditar = bootstrap.Modal.getInstance(document.getElementById('editarModal'));
+                            if (myModalEditar) {
+                                myModalEditar.hide(); // Cerrar si se ha inicializado
+                            }
+                        });
+
+
+                    });
+
+                    // Función para guardar los cambios del modal
+                    function guardarCambios() {
+                        var nuevoTituloProyecto = document.getElementById('inputTituloProyecto').value;
+                        var nuevoTextoPequeno = document.getElementById('inputTextoPequeno').value;
+
+                        // Actualizar el cuadro actual
+                        if (cuadroActual) {
+                            cuadroActual.querySelector('.tituloproyecto').textContent = nuevoTituloProyecto;
+                            cuadroActual.querySelector('.texto-pequeno').textContent = nuevoTextoPequeno;
+                        }
+                    }
+
+                    // Función para ver más detalles
+                    function verMasDetalles() {
+                        window.location.href = 'todolist.html'; // Cambia 'detalles.html' por el nombre de tu archivo
+                    }
+
+                </script>
+
+
 
             </div>
         </div>
@@ -63,6 +305,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Iconos de Bootstrap -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- JavaScript -->
+    <script src="jslogin.js"></script>
+
 </body>
 
 </html>

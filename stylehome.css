@@ -1,7 +1,25 @@
 body {
+    min-height: 100vh;
     background-color: #021A26;
-    height: 100vh;
     margin: 0;
+}
+
+.btn {
+    width: 95px;
+    height: 43px;
+    border: none;
+    border-radius: 10px;
+    background: #021A26;
+    color: #fff;
+    font-weight: 600;
+    margin: 10px 0;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #021A26;
+    color: #fff;
 }
 
 .menu-lateral {
@@ -12,7 +30,6 @@ body {
     flex-direction: column;
     justify-content: space-between;
     width: 100px;
-    /* Haz el menú más angosto */
 }
 
 .menu-lateral a {
@@ -57,7 +74,14 @@ body {
     /* Ajusta el color del texto para que contraste con la imagen */
 }
 
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+    margin-left: 0 !important; /* Sobrescribir el valor con 0 */
+}
 
+.proyectoscontainer{
+    width: 550px;
+    height: 200px;
+}
 .cuadro {
     width: 250px;
     height: 200px;
@@ -91,17 +115,19 @@ body {
     font-size: 16px;
     color: #E5E5E5;
     margin: 5px 0;
-    /* Espaciado entre el título y la barra de progreso */
-}
-
-.barra-progreso {
-    margin-top: 10px;
-    /* Espaciado en la barra de progreso */
-    flex-grow: 1;
 }
 
 .progress {
     height: 20px;
+    margin-bottom: 20px;
+}
+
+.custom-yellow {
+    background-color: #FD9E02;
+}
+
+.eliminarCuadro{
+margin-top: 26px;
 }
 
 .texto-pequeno {
@@ -111,3 +137,8 @@ body {
     font-size: 12px;
     color: #E5E5E5;
 }
+
+
+
+
+
