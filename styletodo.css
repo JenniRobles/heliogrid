@@ -1,0 +1,129 @@
+.logologin{
+    padding-bottom: 20px;
+}
+
+
+
+/* Estilos para el input del formulario */
+#newTaskInput {
+    padding: 10px;
+    border: 2px solid #FFB703;
+    /* Borde amarillo */
+    border-radius: 5px;
+    background-color: #022536;
+    /* Fondo azul */
+    color: white;
+    /* Texto blanco */
+    outline: none;
+    font-size: 16px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Estilos para el botón de añadir tarea con ícono */
+#addTaskBtn {
+    background-color: tr;
+    border: none;
+    color: #022536;
+    padding: 0;
+    cursor: pointer;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    /* Botón circular */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #FFB703;
+    /* Borde amarillo */
+}
+
+#addTaskBtn i {
+    color: white;
+    font-size: 24px;
+    /* Tamaño del ícono */
+}
+
+#addTaskBtn:hover {
+    background-color: #004080;
+    /* Fondo azul más claro al hacer hover */
+    border-color: #FFD700;
+    /* Borde amarillo más brillante */
+}
+
+
+
+
+
+
+
+
+
+
+/* Estilos para el contenedor de la lista */
+.todo-container {
+    max-width: 930px;
+    /* Ancho de 930px */
+    margin: 0 auto;
+    margin-top: 50px;
+    text-align: center;
+    /* Centrar el contenido dentro del contenedor */
+}
+
+.todo-container img {
+    display: block;
+    margin: 0 auto;
+    /* Centrar la imagen */
+    cursor: pointer;
+    /* Mostrar que es clicable */
+}
+
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 2px solid #FFB703;
+    /* Borde amarillo */
+    border-radius: 5px;
+    background-color: #022536;
+    /* Fondo azul oscuro */
+    color: white;
+    /* Texto blanco */
+    margin-bottom: 10px;
+    /* Espacio entre las tareas */
+}
+
+.todo-item.completed span {
+    text-decoration: line-through;
+    color: #999;
+}
+
+/* Estilos para el botón de eliminar */
+.todo-item button {
+    background-color: #021A26;
+    /* Fondo oscuro */
+    color: white;
+    /* Texto blanco */
+    border: 2px solid #FD9E02;
+    /* Borde amarillo */
+    border-radius: 20%;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    /* Tamaño de la X */
+    line-height: 1;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ajuste adicional para el hover */
+.todo-item button:hover {
+    background-color: #FD9E02;
+    /* Fondo amarillo al pasar el cursor */
+    color: #021A26;
+    /* Cambiar la X a color oscuro */
+    border: 2px solid #FD9E02;
+}
