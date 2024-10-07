@@ -74,14 +74,30 @@ body {
     /* Ajusta el color del texto para que contraste con la imagen */
 }
 
-.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
-    margin-left: 0 !important; /* Sobrescribir el valor con 0 */
+.col-md-6{
+    height: 289px;
 }
 
-.proyectoscontainer{
+
+.container,
+.container-fluid,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl,
+.container-xxl {
+    margin-left: 0 !important;
+    /* Sobrescribir el valor con 0 */
+}
+
+.proyectoscontainer {
     width: 550px;
     height: 200px;
+    margin-right: 1px;
 }
+
+
+
 .cuadro {
     width: 250px;
     height: 200px;
@@ -126,8 +142,8 @@ body {
     background-color: #FD9E02;
 }
 
-.eliminarCuadro{
-margin-top: 26px;
+.eliminarCuadro {
+    margin-top: 26px;
 }
 
 .texto-pequeno {
@@ -162,43 +178,81 @@ margin-top: 26px;
 .bloc-notas {
     color: #fff;
     background-color: #022536;
-    /* Color de fondo para el bloc de notas */
     border: 1px solid #ddd;
-    /* Borde del bloc de notas */
     border-radius: 8px;
-    /* Esquinas redondeadas */
     width: 507px;
-    /* Ancho del contenedor padre */
     display: flex;
-    /* Usar flexbox */
     flex-direction: column;
-    /* Disposición vertical */
     margin-bottom: 15px;
-    /* Espacio entre las notas */
 }
 
 .nota {
+    position: relative;
     margin-top: 15px;
-    /* Espacio entre notas */
     padding: 10px;
-    /* Espaciado interno */
     border: 1px solid #ddd;
-    /* Borde de las notas */
     border-radius: 5px;
-    /* Esquinas redondeadas */
     background-color: #ffffff;
-    /* Fondo blanco para las notas */
     width: 507px;
-    /* Ancho máximo para cada nota */
 }
 
 textarea {
     min-height: 50px;
-    /* Altura mínima del textarea */
     max-height: 300px;
-    /* Altura máxima del textarea */
     resize: vertical;
-    /* Permitir solo el cambio de tamaño vertical */
     flex-grow: 1;
-    /* Permitir que el textarea crezca */
+}
+
+/* Estilo para el botón de eliminar "X" */
+.eliminarNota {
+    position: absolute;
+    top: 50%;
+    right: -35px;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+
+.eliminarNota:hover {
+    color: darkred;
+}
+
+
+
+
+
+.calendario {
+    margin-bottom: 20px;
+    overflow: visible; /* Asegura que todo el contenido se muestre */
+}
+
+.table-responsive {
+    border-radius: 25px;
+    overflow-x: auto; 
+    overflow-y: visible; 
+    max-height: none; 
+    background-color: #ffffff !important; /* pedacito que faltaba */
+}
+
+table#calendario {
+    width: 100%;
+    table-layout: fixed; /* Asegura que las celdas se distribuyan uniformemente */
+    
+}
+
+#calendario tbody tr {
+    height: auto; /* Permite que las filas se expandan */
+}
+
+td, th {
+    padding: 10px;
+    vertical-align: middle;
+}
+
+table .table-primary {
+    background-color: #FD9E02 !important; 
+    color: white !important; 
 }

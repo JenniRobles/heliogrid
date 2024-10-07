@@ -17,6 +17,7 @@
 <body>
     <div class="container-fluid">
         <div class="row">
+
             <!-- Menú lateral -->
             <nav class="col-md-1 col-lg-1 menu-lateral">
                 <!-- Menú ocupará solo 1/12 del ancho en pantallas medianas y grandes -->
@@ -44,7 +45,7 @@
                     </div>
 
                     <!-- Bloc de notas -->
-                    <div class=" notascontainer container mt-5">
+                    <div class="notascontainer container mt-5 col-md-6">
                         <div class="bloc-notas p-4">
                             <h4>Escribe tus notas aquí:</h4>
                             <textarea class="form-control" rows="1" placeholder="Escribe tus notas..."
@@ -52,9 +53,100 @@
                             <button class="btnota btn-secondary mt-3" id="nuevaNota">Añadir Nota Nueva</button>
                         </div>
                         <div id="listaNotas"></div> <!-- Contenedor para las notas añadidas -->
+
+                        <!-- Calendario -->
+                        <div class="calendario mt-5">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <button class="btn btn-primary" id="prevMonth"><i
+                                        class="bi bi-chevron-left"></i></button>
+                                <h5 id="monthYear" class="mb-0 text-light"></h5>
+                                <button class="btn btn-primary" id="nextMonth"><i
+                                        class="bi bi-chevron-right"></i></button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered text-center" id="calendario">
+                                    <thead class="bg-dark text-light">
+                                        <tr>
+                                            <th>Dom</th>
+                                            <th>Lun</th>
+                                            <th>Mar</th>
+                                            <th>Mié</th>
+                                            <th>Jue</th>
+                                            <th>Vie</th>
+                                            <th>Sáb</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Las filas del calendario se generarán dinámicamente aquí -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+                <!-- script calendario -->
+                <script>
+                    let fechaActual = new Date(); // Variable global para manejar la fecha actual
+
+                    // Función para generar el calendario
+                    function generarCalendario() {
+                        const mesActual = fechaActual.getMonth(); // Mes actual (0-11)
+                        const añoActual = fechaActual.getFullYear(); // Año actual
+
+                        // Obtener el primer día del mes y el número de días en el mes
+                        const primerDiaDelMes = new Date(añoActual, mesActual, 1);
+                        const ultimoDiaDelMes = new Date(añoActual, mesActual + 1, 0);
+                        const diasEnElMes = ultimoDiaDelMes.getDate(); // Número de días en el mes
+                        const diaDeLaSemana = primerDiaDelMes.getDay(); // (0: domingo, 1: lunes, ..., 6: sábado)
+
+                        // Mostrar el mes y año en el encabezado
+                        document.getElementById('monthYear').textContent = primerDiaDelMes.toLocaleString('default', { month: 'long' }) + ' ' + añoActual;
+
+                        // Crear las filas del calendario
+                        let html = '';
+                        let dia = 1;
+
+                        for (let i = 0; i < 6; i++) { // Seis filas máximo
+                            html += '<tr>';
+                            for (let j = 0; j < 7; j++) { // Siete días por semana
+                                if (i === 0 && j < diaDeLaSemana) {
+                                    // Celdas vacías antes del primer día del mes
+                                    html += '<td></td>';
+                                } else if (dia > diasEnElMes) {
+                                    // Celdas vacías después del último día del mes
+                                    html += '<td></td>';
+                                } else {
+                                    // Celdas con los días
+                                    const esHoy = dia === new Date().getDate() && mesActual === new Date().getMonth() && añoActual === new Date().getFullYear();
+                                    html += `<td class="${esHoy ? 'table-primary' : ''}">${dia}</td>`;
+                                    dia++;
+                                }
+                            }
+                            html += '</tr>';
+                            if (dia > diasEnElMes) break; // Salir si ya no hay más días
+                        }
+
+                        // Insertar el HTML generado en la tabla
+                        document.querySelector('#calendario tbody').innerHTML = html;
+                    }
+
+                    // Manejar la navegación entre meses
+                    document.getElementById('prevMonth').addEventListener('click', function () {
+                        fechaActual.setMonth(fechaActual.getMonth() - 1);
+                        generarCalendario();
+                    });
+
+                    document.getElementById('nextMonth').addEventListener('click', function () {
+                        fechaActual.setMonth(fechaActual.getMonth() + 1);
+                        generarCalendario();
+                    });
+
+                    // Llamar a la función para generar el calendario al cargar la página
+                    document.addEventListener('DOMContentLoaded', generarCalendario);
+                </script>
+
+                <!-- script notas -->
                 <script>
                     // Ajustar automáticamente el tamaño del textarea
                     const textarea = document.getElementById('notaTextarea');
@@ -70,18 +162,33 @@
                         if (notaTexto) {
                             const nuevaNota = document.createElement('div'); // Crear un nuevo div para la nota
                             nuevaNota.classList.add('nota'); // Añadir clase para estilos
-                            nuevaNota.textContent = notaTexto; // Asignar el texto de la nota
-                            document.getElementById('listaNotas').appendChild(nuevaNota); // Añadir la nota al contenedor de notas
-                            textarea.value = ''; // Limpiar el textarea
+
+                            // Crear el contenido de la nota junto con el botón "X"
+                            nuevaNota.innerHTML = `
+            <span>${notaTexto}</span>
+            <button class="eliminarNota"><i class="bi bi-trash3-fill"></i></button>
+        `;
+
+                            // Añadir la nota al contenedor de notas
+                            document.getElementById('listaNotas').appendChild(nuevaNota);
+
+                            // Limpiar el textarea
+                            textarea.value = '';
                             textarea.dispatchEvent(new Event('input')); // Ajustar altura
+
+                            // Agregar la funcionalidad de eliminar la nota
+                            nuevaNota.querySelector('.eliminarNota').addEventListener('click', function () {
+                                nuevaNota.remove(); // Eliminar la nota
+                            });
                         } else {
                             alert('Por favor, escribe algo antes de añadir la nota.');
                         }
                     });
+
+
                 </script>
 
                 <!-- Cuadro de proyecto -->
-                <!-- HTML -->
                 <div class="proyectoscontainer container mt-2">
                     <button class="btn ms-0" id="agregarCuadro">Añadir Proyecto</button>
                     <div id="contenedorCajitas" class="row mt-3">
@@ -141,32 +248,108 @@
                     </div>
                 </div>
 
-                <!-- JavaScript personalizado -->
+                <!-- script cuadros de proyecto -->
                 <script>
                     let cuadroActual; // Variable global para almacenar el cuadro actual
 
                     document.addEventListener('DOMContentLoaded', function () {
+                        // Agregar nuevo proyecto
                         document.getElementById('agregarCuadro').addEventListener('click', function () {
+                            // Abrir el modal de edición inmediatamente después de hacer clic en "Agregar Proyecto"
+                            var myModalEditar = new bootstrap.Modal(document.getElementById('editarModal'));
+                            myModalEditar.show();
+
+                            // Limpiar los campos al agregar un nuevo proyecto
+                            document.getElementById('inputTituloProyecto').value = "";
+                            document.getElementById('inputTextoPequeno').value = "";
+
+                            // Asignar 'null' a cuadroActual para indicar que se está creando un nuevo cuadro
+                            cuadroActual = null;
+                        });
+
+                        // Identificar qué cuadro se está editando (cuando haces clic en el ícono de tres puntos)
+                        document.addEventListener('click', function (event) {
+                            if (event.target.classList.contains('editar-icono')) {
+                                cuadroActual = event.target.closest('.cuadro'); // Guardar el cuadro actual para edición
+                                document.getElementById('inputTituloProyecto').value = cuadroActual.querySelector('.tituloproyecto').textContent;
+                                document.getElementById('inputTextoPequeno').value = cuadroActual.querySelector('.texto-pequeno').textContent;
+
+                                // Abrir el modal de opciones
+                                var myModal = new bootstrap.Modal(document.getElementById('opcionModal'));
+                                myModal.show();
+                            }
+                        });
+
+                        // Manejar la acción del botón "Editar" en el modal de opciones
+                        document.getElementById('editarOpcion').addEventListener('click', function () {
+                            // Cerrar el modal de opciones
+                            var myModalOpcion = bootstrap.Modal.getInstance(document.getElementById('opcionModal'));
+                            if (myModalOpcion) {
+                                myModalOpcion.hide();
+                            }
+
+                            // Abrir el modal de edición
+                            var myModalEditar = new bootstrap.Modal(document.getElementById('editarModal'));
+                            myModalEditar.show();
+                        });
+
+                        // Manejar la acción del botón "Guardar" en el modal de edición
+                        document.getElementById('guardarCambiosBtn').addEventListener('click', function () {
+                            var nuevoTituloProyecto = document.getElementById('inputTituloProyecto').value;
+                            var nuevoTextoPequeno = document.getElementById('inputTextoPequeno').value;
+
+                            // Verificar que los campos no estén vacíos antes de permitir cerrar el modal
+                            if (!nuevoTituloProyecto || !nuevoTextoPequeno) {
+                                alert("Debes completar el título y la fecha antes de guardar los cambios.");
+                                return; // Evitar el cierre del modal si hay campos vacíos
+                            }
+
+                            // Guardar los cambios
+                            guardarCambios();
+
+                            // Cerrar el modal de edición solo si los campos están completos
+                            var myModalEditar = bootstrap.Modal.getInstance(document.getElementById('editarModal'));
+                            if (myModalEditar) {
+                                myModalEditar.hide(); // Cerrar el modal de edición
+                            }
+
+                            // Asegurarse de que el backdrop también se elimine
+                            document.querySelector('.modal-backdrop')?.remove(); // Eliminar el backdrop manualmente si sigue presente
+                            document.body.classList.remove('modal-open'); // Eliminar la clase que impide hacer scroll
+                            document.body.style.removeProperty('padding-right'); // Eliminar el padding extra que se añade al abrir un modal
+                        });
+                    });
+
+                    // Función para guardar los cambios del modal
+                    function guardarCambios() {
+                        var nuevoTituloProyecto = document.getElementById('inputTituloProyecto').value;
+                        var nuevoTextoPequeno = document.getElementById('inputTextoPequeno').value;
+
+                        // Si estamos editando un cuadro existente
+                        if (cuadroActual) {
+                            cuadroActual.querySelector('.tituloproyecto').textContent = nuevoTituloProyecto;
+                            cuadroActual.querySelector('.texto-pequeno').textContent = nuevoTextoPequeno;
+                        } else {
+                            // Si estamos creando un nuevo cuadro
                             const contenedorCajitas = document.getElementById('contenedorCajitas');
 
-                            // Crear una nueva cajita dentro de una columna de Bootstrap
                             const nuevaColumna = document.createElement('div');
-                            nuevaColumna.classList.add('col-6', 'mb-4'); // Para limitar a dos cajitas por fila
+                            nuevaColumna.classList.add('col-6', 'mb-4');
 
                             nuevaColumna.innerHTML = `
-                            <div class="cuadro d-flex flex-column p-3 border rounded">
-                                <i class="bi bi-three-dots-vertical editar-icono" data-bs-toggle="modal" data-bs-target="#opcionModal"></i>
-                                <h5 class="tituloproyecto">Título del Proyecto</h5>
-                                <h6 class="tituloprogreso">Progreso</h6>
-                                <div class="barra-progreso">
-                                    <div class="progress">
-                                        <div class="progress-bar custom-yellow" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+                                <div class="cuadro d-flex flex-column p-3 border rounded">
+                                    <i class="bi bi-three-dots-vertical editar-icono" data-bs-toggle="modal" data-bs-target="#opcionModal"></i>
+                                    <h5 class="tituloproyecto">${nuevoTituloProyecto}</h5>
+                                    <h6 class="tituloprogreso">Progreso</h6>
+                                    <div class="barra-progreso">
+                                        <div class="progress">
+                                            <div class="progress-bar custom-yellow" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+                                        </div>
                                     </div>
+                                    <small class="texto-pequeno">${nuevoTextoPequeno}</small>
+                                    <button class="btn btn-sm mt-2 eliminarCuadro">Eliminar</button>
                                 </div>
-                                <small class="texto-pequeno">Fecha de entrega</small>
-                                <button class="btn btn-sm mt-2 eliminarCuadro">Eliminar</button>
-                            </div>
-                        `;
+                            `;
 
                             contenedorCajitas.appendChild(nuevaColumna);
 
@@ -176,74 +359,9 @@
                                     nuevaColumna.remove();
                                 }
                             });
-
-                            // Guardar el cuadro actual recién creado
-                            cuadroActual = nuevaColumna.querySelector('.cuadro');
-
-                            // Limpiar los campos del modal
-                            document.getElementById('inputTituloProyecto').value = "";
-                            document.getElementById('inputTextoPequeno').value = "";
-
-                            // Abrir el modal de edición inmediatamente después de crear el proyecto
-                            var myModalEditar = new bootstrap.Modal(document.getElementById('editarModal'));
-                            myModalEditar.show();
-                        });
-
-                        // Para identificar qué cuadro se está editando (cuando haces clic en el ícono de tres puntos)
-                        document.addEventListener('click', function (event) {
-                            if (event.target.classList.contains('editar-icono')) {
-                                cuadroActual = event.target.closest('.cuadro'); // Guardar el cuadro actual
-                                document.getElementById('inputTituloProyecto').value = cuadroActual.querySelector('.tituloproyecto').textContent;
-                                document.getElementById('inputTextoPequeno').value = cuadroActual.querySelector('.texto-pequeno').textContent;
-                                // Abrir el modal de opciones
-                                var myModal = new bootstrap.Modal(document.getElementById('opcionModal'));
-                                myModal.show();
-                            }
-                        });
-
-                        // Manejar la acción del botón "Editar"
-                        document.getElementById('editarOpcion').addEventListener('click', function () {
-                            // Cerrar el modal de opciones
-                            var myModalOpcion = bootstrap.Modal.getInstance(document.getElementById('opcionModal'));
-                            myModalOpcion.hide();
-
-                            // Abrir el modal de edición
-                            var myModalEditar = new bootstrap.Modal(document.getElementById('editarModal'));
-                            myModalEditar.show();
-                        });
-
-                        // Manejar la acción del botón "Guardar" en el modal de edición
-                        document.getElementById('guardarCambiosBtn').addEventListener('click', function () {
-                            guardarCambios(); // Guardar cambios
-                            // Cerrar el modal de edición
-                            var myModalEditar = bootstrap.Modal.getInstance(document.getElementById('editarModal'));
-                            if (myModalEditar) {
-                                myModalEditar.hide(); // Cerrar si se ha inicializado
-                            }
-                        });
-                    });
-
-                    // Función para guardar los cambios del modal
-                    function guardarCambios() {
-                        var nuevoTituloProyecto = document.getElementById('inputTituloProyecto').value;
-                        var nuevoTextoPequeno = document.getElementById('inputTextoPequeno').value;
-
-                        // Actualizar el cuadro actual
-                        if (cuadroActual) {
-                            cuadroActual.querySelector('.tituloproyecto').textContent = nuevoTituloProyecto;
-                            cuadroActual.querySelector('.texto-pequeno').textContent = nuevoTextoPequeno;
                         }
                     }
-
-                    // Función para ver más detalles
-                    function verMasDetalles() {
-                        window.location.href = 'todolist.html'; // Cambia 'detalles.html' por el nombre de tu archivo
-                    }
                 </script>
-
-                
-                
-
 
 
             </div>
